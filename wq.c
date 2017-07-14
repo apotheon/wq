@@ -98,7 +98,7 @@ void print_help_message() {
     printf("SYNOPSIS:\n\n");
 
     print_indent_wrap(
-        "Enter a command.  I'll figure the rest out later.\n", 8, 80
+        "Enter a COMMAND.  I'll figure the rest out later.\n", 8, 80
     );
 
     printf("\n");
