@@ -1,0 +1,88 @@
+#!/usr/bin/env ruby
+
+command = ARGV.shift
+
+subcommand = '<command>'
+
+cmd_info = {
+  'backlog': {
+    usage:  '    backlog [<SUBCOMMAND> <ARGUMENT>]'
+    help:   %q{
+            SUBCOMMAND can be "add", "delete", or "list".  With no subcommand,
+            default to list behavior.
+
+            add:        Add ARGUMENT as a new backlog item with today's date.
+            complete:   Move backlog specified by ARGUMENT (number) to "done".
+            delete:     Delete backlog item specified by ARGUMENT (number).
+            list:       List all backlog items as a numbered list.  These
+                        numbers are used with "complete" and "delete".
+    },
+  },
+
+  'done': {
+  },
+
+  'help': {
+    usage: 'help',
+    help: 'Print this help text.'
+  }
+}
+
+def usage_text cmd=subcommand
+  "USAGE: wq #{cmd}"
+end
+
+def cmd_text cmd=subcommand
+  <<-EOF.gsub /^ {4}/, ''
+    #{cmd_usage cmd}
+    #{cmd_help cmd}
+  EOF
+end
+
+def cmd_usage subcommand
+end
+
+def cmd_help subcommand
+end
+
+def readfile cmd=command
+  IO.readlines(cmd).take_while {|l| !l.empty?}
+end
+
+def cmd_match cmd=command
+  cmd.split('').tap do |letters|
+    matcher = letters.shift
+    matcher << letters.join '?'
+  end
+
+  matcher
+end
+
+if command.match /^he?l?p?$/
+  if ARGV.size > 0
+    subcommand = ARGV.shift
+  end
+
+  puts usage_text cmd_text subcommand
+  puts help_text subcommand
+if command.match /^ba?c?k?l?o?g?$/
+  subcommand = ARGV.shift.to_s
+
+  if subcommand.match /^(list)?$/
+    if arg = ARGV.shift
+      backlog = readfile filename
+    else
+      exit
+    end
+
+    imax = backlog.size - 1
+
+    backlog.each_index do |i|
+      puts "#{i.to_s.rjust imax}. #{backlog[i]}"
+    end
+  end
+if command.match /do?n?e?/
+when 'done'
+else
+  puts usage_text 'help'
+end
