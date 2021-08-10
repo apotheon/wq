@@ -6,7 +6,7 @@ completed, and optionally notes related to the list in a given file.
 
 ## Status
 
-This project is on indefinite hold (already) due to the practical use-case in
-my life going distinctly sideways, due to the apparently inherent tendency of
-humans to destroy the systematic, elegant, and beautiful in use patterns of you
-on't give them tools that encourage better behavior quickly enough.
+This project is on indefinite hold due to changes in priorities and conditions
+for dogfooding during development.  Upon looking at this project again, I
+realize I would need to rediscover the use case insights on which I originally
+built the ideas for what to build.  Perhaps I will try again some day.
